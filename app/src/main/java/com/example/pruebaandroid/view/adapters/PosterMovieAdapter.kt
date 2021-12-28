@@ -3,6 +3,8 @@ package com.example.pruebaandroid.view.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.pruebaandroid.businesslogic.utils.IMAGE_URL
 import com.example.pruebaandroid.databinding.CustomMoviePosterBinding
 import com.example.pruebaandroid.model.PopularMovie
 
@@ -14,6 +16,8 @@ class PosterMovieAdapter(private val movieList: List<PopularMovie>) :
             with(binding) {
                 with(movie) {
                     movieTitle.text = title
+                    Glide.with(binding.root).load(IMAGE_URL.POSTER_W500.url + posterPath)
+                        .into(moviePoster)
                 }
             }
         }
