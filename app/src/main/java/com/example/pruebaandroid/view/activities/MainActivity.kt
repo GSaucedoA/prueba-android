@@ -1,20 +1,23 @@
 package com.example.pruebaandroid.view.activities
 
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.window.layout.WindowMetricsCalculator
-import com.example.pruebaandroid.R
 import com.example.pruebaandroid.databinding.ActivityMainBinding
 import com.example.pruebaandroid.model.PopularMovie
 import com.example.pruebaandroid.view.adapters.PosterMovieAdapter
+import com.example.pruebaandroid.view.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
+    private val popularMovieList = mutableListOf<PopularMovie>()
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -28,26 +31,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpRecyclerView()
+        setUpObservers()
+    }
+
+    private fun setUpObservers() {
+        viewModel.response.observe(this) {
+            updateRecyclerView(it.popularMovieList)
+        }
+    }
+
+    private fun updateRecyclerView(list: List<PopularMovie>) {
+        val startFrom = popularMovieList.size
+        popularMovieList.addAll(list)
+        binding.recyclerView.adapter?.notifyItemRangeChanged(startFrom, list.size)
     }
 
     private fun setUpRecyclerView() {
         with(binding) {
-            recyclerView.adapter = PosterMovieAdapter(
-                listOf(
-                    PopularMovie(0, "1", ""),
-                    PopularMovie(0, "2", ""),
-                    PopularMovie(0, "3", ""),
-                    PopularMovie(0, "4", ""),
-                    PopularMovie(0, "1", ""),
-                    PopularMovie(0, "2", ""),
-                    PopularMovie(0, "3", ""),
-                    PopularMovie(0, "4", ""),
-                    PopularMovie(0, "1", ""),
-                    PopularMovie(0, "2", ""),
-                    PopularMovie(0, "3", ""),
-                    PopularMovie(0, "4", "")
-                )
-            )
+            recyclerView.adapter = PosterMovieAdapter(popularMovieList)
         }
         updateSpanCount()
     }
