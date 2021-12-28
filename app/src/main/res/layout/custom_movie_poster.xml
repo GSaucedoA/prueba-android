@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="173dp"
     android:layout_height="260dp"
-    android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp"
     app:cardUseCompatPadding="true">
@@ -25,6 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/black"
+            android:gravity="center"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
