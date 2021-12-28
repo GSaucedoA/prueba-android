@@ -2,7 +2,6 @@ package com.example.pruebaandroid.view.activities
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -63,8 +62,6 @@ class MainActivity : AppCompatActivity() {
         val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(this)
         val currentBounds = windowMetrics.bounds
         val widthInPX = currentBounds.width()
-
-        Toast.makeText(this, widthInPX.toString(), Toast.LENGTH_SHORT).show()
 
         widthInDP = widthInPX / density
 
