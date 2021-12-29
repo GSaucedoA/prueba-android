@@ -12,6 +12,9 @@ interface PopularMovieDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(movie: PopularMovie)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertList(list: List<PopularMovie>)
+
     @Query("SELECT * FROM popular_movies")
     fun getPopularMovies(): Flow<List<PopularMovie>>
 }
