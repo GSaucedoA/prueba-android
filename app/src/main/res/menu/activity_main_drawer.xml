@@ -8,5 +8,9 @@
             android:id="@+id/nav_movie_database"
             android:icon="@drawable/ic_movie"
             android:title="@string/popular_movies" />
+        <item
+            android:id="@+id/uploadImage"
+            android:icon="@drawable/ic_upload"
+            android:title="@string/upload_image"/>
     </group>
 </menu>
