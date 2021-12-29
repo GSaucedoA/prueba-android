@@ -13,4 +13,4 @@ data class PopularMovie(
     @SerializedName("poster_path") @ColumnInfo(name = "poster_path") val posterPath: String
 )
 
-fun PopularMovie.posterUrl(): String = IMAGE_URL.POSTER_W500.toString() + posterPath
+fun PopularMovie.posterUrl(): String = IMAGE_URL.POSTER_W500.url + posterPath
