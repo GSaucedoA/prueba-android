@@ -10,5 +10,10 @@
         android:name="com.example.pruebaandroid.view.fragments.MovieDatabaseFragment"
         android:label="@string/popular_movies"
         tools:layout="@layout/fragment_movie_database" />
+    <fragment
+        android:id="@+id/uploadImage"
+        android:name="com.example.pruebaandroid.view.fragments.UploadImage"
+        android:label="@string/upload_image"
+        tools:layout="@layout/fragment_upload_image" />
 
 </navigation>

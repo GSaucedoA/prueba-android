@@ -10,4 +10,6 @@
 
     <string name="popular_movies">Popular movies</string>
     <string name="success_location_send">"Su ubicación ha sido enviada con éxito"</string>
+    <string name="upload_image">Subir Imagen</string>
+    <string name="select_image">Seleccionar imagen</string>
 </resources>
