@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class MovieDatabaseViewModel @Inject constructor(
     private val repository: PopularMovieApiRepo,
     private val popularMovieDao: PopularMovieDao
 ) : ViewModel() {

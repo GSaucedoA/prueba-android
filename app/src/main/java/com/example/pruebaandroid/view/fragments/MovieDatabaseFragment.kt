@@ -1,39 +1,48 @@
-package com.example.pruebaandroid.view.activities
+package com.example.pruebaandroid.view.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.window.layout.WindowMetricsCalculator
-import com.example.pruebaandroid.databinding.ActivityMainBinding
+import com.example.pruebaandroid.databinding.FragmentMovieDatabaseBinding
 import com.example.pruebaandroid.model.PopularMovie
 import com.example.pruebaandroid.view.adapters.PosterMovieAdapter
-import com.example.pruebaandroid.view.viewmodel.MainViewModel
+import com.example.pruebaandroid.view.viewmodel.MovieDatabaseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainViewModel by viewModels()
+class MovieDatabaseFragment : Fragment() {
+    private lateinit var binding: FragmentMovieDatabaseBinding
+    private val viewModel: MovieDatabaseViewModel by viewModels()
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         updateSpanCount()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentMovieDatabaseBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setUpRecyclerView()
         setUpObservers()
     }
 
     private fun setUpObservers() {
-        viewModel.response.observe(this) {
+        viewModel.response.observe(viewLifecycleOwner) {
             updateRecyclerView(it)
         }
     }
@@ -56,7 +65,8 @@ class MainActivity : AppCompatActivity() {
     private fun getDynamicSpanCount(): Int {
         val widthInDP: Float
         val density = resources.displayMetrics.density
-        val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(this)
+        val windowMetrics =
+            WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(requireActivity())
         val currentBounds = windowMetrics.bounds
         val widthInPX = currentBounds.width()
 
