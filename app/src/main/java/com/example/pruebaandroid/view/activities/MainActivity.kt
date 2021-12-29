@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpObservers() {
         viewModel.response.observe(this) {
-            updateRecyclerView(it.popularMovieList)
+            updateRecyclerView(it)
         }
     }
 
