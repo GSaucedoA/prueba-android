@@ -34,16 +34,13 @@ class GoogleMapsHistoryFragment : Fragment() {
         binding.googleMap.apply {
             onCreate(savedInstanceState)
             onResume()
-            getMapAsync(object : OnMapReadyCallback {
-                override fun onMapReady(map: GoogleMap) {
-                    val itspa = LatLng(19.54114297104868, -101.58399614481232)
-                    map.apply {
-                        addMarker(MarkerOptions().position(itspa).title("Marker"))
-                        moveCamera(CameraUpdateFactory.newLatLngZoom(itspa, 15f))
-                    }
+            getMapAsync { map ->
+                val itspa = LatLng(19.54114297104868, -101.58399614481232)
+                map.apply {
+                    addMarker(MarkerOptions().position(itspa).title("ITSPA"))
+                    moveCamera(CameraUpdateFactory.newLatLngZoom(itspa, 15f))
                 }
-
-            })
+            }
         }
     }
 }
