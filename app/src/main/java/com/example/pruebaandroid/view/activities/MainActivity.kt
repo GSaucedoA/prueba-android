@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
-    private val popularMovieList = mutableListOf<PopularMovie>()
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -40,14 +39,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateRecyclerView(list: List<PopularMovie>) {
-        val startFrom = popularMovieList.size
-        popularMovieList.addAll(list)
-        binding.recyclerView.adapter?.notifyItemRangeChanged(startFrom, list.size)
+        (binding.recyclerView.adapter as PosterMovieAdapter).submitList(list)
     }
 
     private fun setUpRecyclerView() {
         with(binding) {
-            recyclerView.adapter = PosterMovieAdapter(popularMovieList)
+            recyclerView.adapter = PosterMovieAdapter()
         }
         updateSpanCount()
     }
