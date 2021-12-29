@@ -2,21 +2,23 @@ package com.example.pruebaandroid.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.pruebaandroid.businesslogic.utils.IMAGE_URL
 import com.example.pruebaandroid.databinding.CustomMoviePosterBinding
 import com.example.pruebaandroid.model.PopularMovie
+import com.example.pruebaandroid.model.posterUrl
 
-class PosterMovieAdapter(private val movieList: List<PopularMovie>) :
-    RecyclerView.Adapter<PosterMovieAdapter.ViewHolder>() {
+class PosterMovieAdapter :
+    ListAdapter<PopularMovie, PosterMovieAdapter.ViewHolder>(DiffCallback) {
     inner class ViewHolder(private val binding: CustomMoviePosterBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: PopularMovie) {
             with(binding) {
                 with(movie) {
                     movieTitle.text = title
-                    Glide.with(binding.root).load(IMAGE_URL.POSTER_W500.url + posterPath)
+                    Glide.with(binding.root).load(posterUrl())
                         .into(moviePoster)
                 }
             }
@@ -30,8 +32,20 @@ class PosterMovieAdapter(private val movieList: List<PopularMovie>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(movieList[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = movieList.size
+
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<PopularMovie>() {
+            override fun areItemsTheSame(oldItem: PopularMovie, newItem: PopularMovie): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: PopularMovie, newItem: PopularMovie): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
 }
