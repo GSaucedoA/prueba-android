@@ -1,7 +1,7 @@
 package com.example.pruebaandroid.businesslogic.Workers
 
 import android.content.Context
-import android.widget.Toast
+import android.util.Log
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
@@ -10,7 +10,6 @@ import com.example.pruebaandroid.businesslogic.managers.LocationManager
 import com.example.pruebaandroid.businesslogic.respositories.LocationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
 
 class LocationWorkerFactory(private val application: MyApplication) : WorkerFactory() {
     override fun createWorker(
@@ -18,6 +17,7 @@ class LocationWorkerFactory(private val application: MyApplication) : WorkerFact
         workerClassName: String,
         workerParameters: WorkerParameters
     ): ListenableWorker? {
+        Log.e("WorkerFactoy", "entra")
         return when (workerClassName) {
             LocationWorker::class.java.canonicalName -> LocationWorker(
                 appContext,

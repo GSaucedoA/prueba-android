@@ -18,7 +18,6 @@ class LocationWorker(
 
     @SuppressLint("MissingPermission")
     override suspend fun doWork(): Result {
-        Toast.makeText(applicationContext, "Worker call", Toast.LENGTH_SHORT).show()
         return withContext(Dispatchers.IO) {
             try {
                 repository.getLocation()
