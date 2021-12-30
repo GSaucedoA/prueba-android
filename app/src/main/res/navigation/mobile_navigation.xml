@@ -15,5 +15,10 @@
         android:name="com.example.pruebaandroid.view.fragments.UploadImage"
         android:label="@string/upload_image"
         tools:layout="@layout/fragment_upload_image" />
+    <fragment
+        android:id="@+id/googleMapsHistoryFragment"
+        android:name="com.example.pruebaandroid.view.fragments.GoogleMapsHistoryFragment"
+        android:label="@string/google_history"
+        tools:layout="@layout/fragment_google_maps_history" />
 
 </navigation>

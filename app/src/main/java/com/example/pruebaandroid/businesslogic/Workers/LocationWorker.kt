@@ -2,6 +2,7 @@ package com.example.pruebaandroid.businesslogic.Workers
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.location.Geocoder
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.pruebaandroid.R
@@ -17,8 +18,16 @@ class LocationWorker(contex: Context, params: WorkerParameters) : Worker(contex,
 
         val client = LocationServices.getFusedLocationProviderClient(context)
         client.lastLocation.addOnSuccessListener {
+            val cityName: String =
+                Geocoder(context).getFromLocation(it.latitude, it.longitude, 1)[0].locality
+            val date = Calendar.getInstance().timeInMillis
             upladLocationToFirebase(
-                Location(latitude = it.latitude, longitude = it.longitude),
+                Location(
+                    date = date,
+                    cityName = cityName,
+                    latitude = it.latitude,
+                    longitude = it.longitude
+                ),
                 context
             )
         }
@@ -29,22 +38,11 @@ class LocationWorker(contex: Context, params: WorkerParameters) : Worker(contex,
     private fun upladLocationToFirebase(location: Location, context: Context) {
         val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-        db.collection("Location").document(Calendar.getInstance().timeInMillis.toString())
+        db.collection("Location").document(location.date.toString())
             .set(location)
             .addOnSuccessListener {
                 makeStatusNotification(context.getString(R.string.success_location_send), context)
             }
-
-        /* db.collection("user").get().addOnCompleteListener {
-             if (it.isSuccessful) {
-                 for (document in it.result) {
-                     val movie = document.toObject(PopularMovie::class.java)
-                     Log.e("database:get", " => $movie")
-                 }
-             } else {
-                 Log.e("database:error", it.exception?.message.toString())
-             }
-         }*/
     }
 
 }

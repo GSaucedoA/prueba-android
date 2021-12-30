@@ -12,4 +12,6 @@
     <string name="success_location_send">"Su ubicación ha sido enviada con éxito"</string>
     <string name="upload_image">Subir Imagen</string>
     <string name="select_image">Seleccionar imagen</string>
+    <string name="google_history">Historial de ubicaciones</string>
+    <string name="see_in_map">Ver en el mapa</string>
 </resources>
