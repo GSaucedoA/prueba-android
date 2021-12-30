@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -93,11 +94,31 @@ class NavigationActivity : AppCompatActivity() {
 
     private fun sendLocationToFirestore() {
         val workerManager = WorkManager.getInstance(applicationContext)
-        workerManager.enqueue(
+        workerManager.enqueueUniquePeriodicWork(
+            "location_worker_1",
+            ExistingPeriodicWorkPolicy.KEEP,
             PeriodicWorkRequestBuilder<LocationWorker>(
                 PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS,
                 TimeUnit.MILLISECONDS
-            ).setInitialDelay(20, TimeUnit.SECONDS).build()
+            ).build()
+        )
+
+        workerManager.enqueueUniquePeriodicWork(
+            "location_worker_2",
+            ExistingPeriodicWorkPolicy.KEEP,
+            PeriodicWorkRequestBuilder<LocationWorker>(
+                PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS,
+                TimeUnit.MILLISECONDS
+            ).setInitialDelay(5, TimeUnit.MINUTES).build()
+        )
+
+        workerManager.enqueueUniquePeriodicWork(
+            "location_worker_3",
+            ExistingPeriodicWorkPolicy.KEEP,
+            PeriodicWorkRequestBuilder<LocationWorker>(
+                PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS,
+                TimeUnit.MILLISECONDS
+            ).setInitialDelay(10, TimeUnit.MINUTES).build()
         )
     }
 }
