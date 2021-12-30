@@ -3,6 +3,7 @@ package com.example.pruebaandroid.view.activities
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -93,10 +94,11 @@ class NavigationActivity : AppCompatActivity() {
     }
 
     private fun sendLocationToFirestore() {
+        Log.e("test", "e.message.toString()")
         val workerManager = WorkManager.getInstance(applicationContext)
         workerManager.enqueueUniquePeriodicWork(
             "location_worker_1",
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.REPLACE,
             PeriodicWorkRequestBuilder<LocationWorker>(
                 PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS,
                 TimeUnit.MILLISECONDS
@@ -105,7 +107,7 @@ class NavigationActivity : AppCompatActivity() {
 
         workerManager.enqueueUniquePeriodicWork(
             "location_worker_2",
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.REPLACE,
             PeriodicWorkRequestBuilder<LocationWorker>(
                 PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS,
                 TimeUnit.MILLISECONDS
@@ -114,7 +116,7 @@ class NavigationActivity : AppCompatActivity() {
 
         workerManager.enqueueUniquePeriodicWork(
             "location_worker_3",
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.REPLACE,
             PeriodicWorkRequestBuilder<LocationWorker>(
                 PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS,
                 TimeUnit.MILLISECONDS
