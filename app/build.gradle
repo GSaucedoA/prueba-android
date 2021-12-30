@@ -125,4 +125,6 @@ dependencies {
 
     //WorkManager
     implementation "androidx.work:work-runtime-ktx:$worker"
+    //app start up
+    implementation("androidx.startup:startup-runtime:1.1.0")
 }

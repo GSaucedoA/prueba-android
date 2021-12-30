@@ -3,6 +3,7 @@ package com.example.pruebaandroid.view.activities
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -13,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -92,12 +94,33 @@ class NavigationActivity : AppCompatActivity() {
     }
 
     private fun sendLocationToFirestore() {
+        Log.e("test", "e.message.toString()")
         val workerManager = WorkManager.getInstance(applicationContext)
-        workerManager.enqueue(
+        workerManager.enqueueUniquePeriodicWork(
+            "location_worker_1",
+            ExistingPeriodicWorkPolicy.REPLACE,
             PeriodicWorkRequestBuilder<LocationWorker>(
                 PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS,
                 TimeUnit.MILLISECONDS
-            ).setInitialDelay(20, TimeUnit.SECONDS).build()
+            ).build()
+        )
+
+        workerManager.enqueueUniquePeriodicWork(
+            "location_worker_2",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            PeriodicWorkRequestBuilder<LocationWorker>(
+                PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS,
+                TimeUnit.MILLISECONDS
+            ).setInitialDelay(5, TimeUnit.MINUTES).build()
+        )
+
+        workerManager.enqueueUniquePeriodicWork(
+            "location_worker_3",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            PeriodicWorkRequestBuilder<LocationWorker>(
+                PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS,
+                TimeUnit.MILLISECONDS
+            ).setInitialDelay(10, TimeUnit.MINUTES).build()
         )
     }
 }
